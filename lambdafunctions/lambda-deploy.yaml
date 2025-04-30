@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy Lambda function using CodePipeline artifact
+
+Resources:
+  ImageRekognitionLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: ImageRekognitionLambda
+      Handler: lf1.lambda_handler     # Change this based on your Python entrypoint
+      Runtime: python3.11
+      Role: arn:aws:iam::311141533881:role/LambdaExecutionRole   # Replace with your Lambda IAM role ARN
+      Code:
+        S3Bucket: YOUR_ARTIFACT_BUCKET     # This is the bucket where CodePipeline stores build output
+        S3Key: lambda-deploy.zip
+      Timeout: 10
+      MemorySize: 128
