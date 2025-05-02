@@ -24,14 +24,16 @@ def search_elasticsearch(query_string):
     }
     keywords = query_string
     query = {
-        "query": {
-            "bool": {
-                "should": [
-                    {"match": {"labels": {"query": keyword, "fuzziness": "AUTO"}}}
-                    for keyword in keywords
-                ]
-            }
+      "query": {
+        "bool": {
+          "should": [
+            { "match": { "labels": keyword } }
+            for keyword in keywords
+          ],
+          # at least one should‐clause must match:
+          "minimum_should_match": 1
         }
+      }
     }
 
     print("ES Query ---> ", query)
